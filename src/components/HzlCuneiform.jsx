@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import unicodeData from "../myscripts/unicode.json";
 import "../myscripts/unicode.css";
 
-export class Hzl_cuneiform extends Component {
+export class HzlCuneiform extends Component {
   write_cuneiform() {
     let cuneiform = "";
     for (let i of this.props.signs) {
@@ -17,4 +17,4 @@ export class Hzl_cuneiform extends Component {
   }
 }
 
-export default Hzl_cuneiform;
+export default HzlCuneiform;

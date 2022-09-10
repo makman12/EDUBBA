@@ -1,10 +1,20 @@
 import React from "react";
-import { Hzl_cuneiform } from "./Hzl_cuneiform";
+import { HzlCuneiform } from "./HzlCuneiform";
 import { useState } from "react";
+import {
+  Grommet,
+  Page,
+  PageContent,
+  Card,
+  Text,
+  TextInput,
+  Button,
+} from "grommet";
+import { Grid } from "@mui/material";
 // get props from parent component
 
 function quizMaker(word) {
-  let cuneiform = <Hzl_cuneiform signs={word.syllabic_hzl} />;
+  let cuneiform = <HzlCuneiform signs={word.syllabic_hzl} />;
   let word_transcription = word.word;
   let question = <div>{cuneiform}</div>;
   return question;
@@ -24,30 +34,33 @@ function normalize(text) {
   text = text.replace(/d/g, "t");
   text = text.replace(/j/g, "y");
   text = text.replace(/ia/g, "ya");
-  let l = "()?-[]x+’'°§⸢⸣*./";
+  let l = "()?[]x+’'°§⸢⸣*˹˺";
   for (let c of l) {
     while (text.includes(c)) {
       text = text.replace(c, "");
     }
-    return text;
   }
+  return text;
 }
+let stroke = 0;
 
 export default function Quiz(props) {
   let words = props.words;
+  console.log("geld");
   // shuffle words
-  words.sort(() => Math.random() - 0.5);
+  //words.sort(() => Math.random() - 0.5);
   let [quizId, setQuizId] = useState(0);
   let [correctAlert, setCorrectAlert] = useState(<div></div>);
   let quiz = quizMaker(words[quizId]);
 
   function answerHandle(e) {
-    setQuizId(quizId + 1);
     let userAnswer = document.getElementById("answer").value;
-    // split userAnswer by "-" and "."
-    let userAnswerArray = userAnswer.split(/[-.]/);
+    document.getElementById("answer").value = "";
+    // split userAnswer by "-" and "." and "/"
+    let userAnswerArray = userAnswer.split(/[-./]/);
     let answer = normalize(words[quizId].word);
-    let answerArray = answer.split(/[-.]/);
+    console.log(answer);
+    let answerArray = answer.split(/[-./]/);
     let correct = true;
     if (userAnswerArray.length !== answerArray.length) {
       correct = false;
@@ -60,21 +73,100 @@ export default function Quiz(props) {
       }
     }
     if (correct) {
-      setCorrectAlert(<div>Correct!</div>);
+      stroke = 0;
+      setQuizId(quizId + 1);
+      setCorrectAlert(
+        <Card
+          background={{ color: "status-ok" }}
+          pad="small"
+          align="center"
+          justify="center"
+          direction="column"
+          margin="none"
+        >
+          <Text color="light-1" textAlign="center">
+            Correct!
+          </Text>
+        </Card>
+      );
     }
     if (!correct) {
+      let returnText = "";
+      if (stroke === 0) {
+        stroke = 1;
+        returnText = "Wrong! Try again!";
+      } else if (stroke === 1) {
+        stroke = 2;
+        returnText =
+          "Wrong Again. The correct answer was: " +
+          words[quizId].word +
+          "\nPress Enter to Continue";
+      } else if (stroke === 2) {
+        stroke = 0;
+        setQuizId(quizId + 1);
+        setCorrectAlert(<div></div>);
+        return true;
+      }
+
       setCorrectAlert(
-        <div>Incorrect!, correct answer was {words[quizId].word}</div>
+        <Card
+          background={{ color: "status-error" }}
+          pad="small"
+          align="center"
+          justify="center"
+          direction="column"
+          margin="none"
+        >
+          <Text color="light-1" textAlign="center">
+            {returnText}
+          </Text>
+        </Card>
       );
+    }
+  }
+
+  // when #card was in focus, press enter to answerHandle
+  function handleKeyPress(e) {
+    if (e.key === "Enter") {
+      answerHandle();
     }
   }
 
   return (
     <div>
-      {quiz}
-      <input type="text" id="answer" />
-      <button onClick={answerHandle}>Check</button>
-      {correctAlert}
+      <Card
+        id="card"
+        pad="large"
+        gap="medium"
+        overflow="auto"
+        flex
+        margin="medium"
+        background={{ color: "background-front", dark: false }}
+        hoverIndicator={true}
+        align="stretch"
+        justify="start"
+        direction="column"
+        onKeyPress={handleKeyPress}
+      >
+        <Text margin="small" textAlign="center" size="large" truncate={false}>
+          {quiz}
+        </Text>
+        <TextInput
+          disabled={false}
+          id="answer"
+          textAlign="center"
+          placeholder="Transliterate it!"
+          reverse
+        />
+        <Button
+          label="Check"
+          primary
+          type="button"
+          color="brand"
+          onClick={answerHandle}
+        />
+        {correctAlert}
+      </Card>
     </div>
   );
 }
