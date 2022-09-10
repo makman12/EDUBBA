@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Home } from "./components/Home";
 import Lessons from "./components/Lessons";
 import Lesson from "./components/Lesson";
+import Signs from "./components/Signs";
+import Sign from "./components/Sign";
 import {
   Main,
   Page,
@@ -16,6 +18,7 @@ import {
   grommet,
 } from "grommet";
 import { Login } from "grommet-icons";
+import "./myscripts/unicode.css";
 
 function App() {
   return (
@@ -23,7 +26,7 @@ function App() {
       <Page>
         <PageContent>
           <Box fill>
-            <Box flex overflow="auto">
+            <Box flex overflow="auto" className="main">
               <BrowserRouter>
                 <Nav
                   align="center"
@@ -32,14 +35,18 @@ function App() {
                   justify="between"
                   direction="row"
                   pad="xsmall"
-                  gap="large"
+                  gap="small"
                   margin="none"
                 >
                   <Link to="/">
-                    <Heading level="2" textAlign="start" color="light-1">
-                      É.DUB.BA: School of Hittite Cuneiform
+                    <Heading level="3" textAlign="start" color="light-1">
+                      <Text className="unicode" size="xlarge">
+                        𒂍𒁾𒁀-
+                      </Text>
+                      É.DUB.BA
                     </Heading>
                   </Link>
+
                   <Box
                     align="center"
                     justify="between"
@@ -48,6 +55,9 @@ function App() {
                     direction="row"
                     gap="medium"
                   >
+                    <Link to="/signs">
+                      <Anchor label="Signs" color="light-1" gap="medium" />
+                    </Link>
                     <Link to="/lessons">
                       <Anchor label="Lessons" color="light-1" gap="medium" />
                     </Link>
@@ -58,13 +68,15 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/lessons" element={<Lessons />} />
                   <Route path="/lesson/:id" element={<Lesson />} />
+                  <Route path="/Signs" element={<Signs />} />
+                  <Route path="/Sign/:id" element={<Sign />} />
                 </Routes>
               </BrowserRouter>
             </Box>
             {/* footer always on bottom*/}
-            <Footer background="brand" pad="medium" flex={false}>
+            <Footer background="brand" pad="medium" className="footer">
               <Text>M. Ali Akman</Text>
-              <Anchor label="About" />
+              <Anchor label="About" color="light-2" />
             </Footer>
           </Box>
         </PageContent>

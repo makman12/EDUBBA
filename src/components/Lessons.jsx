@@ -1,22 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Page, PageContent, PageHeader, Anchor, Box, Heading } from "grommet";
 
 export default function Lessons() {
   const renderLessons = () => {
     let lessons = [];
     for (let i = 1; i <= 58; i++) {
       lessons.push(
-        <Link to={`/lesson/${i}`} key={i}>
-          Lesson {i}
-        </Link>
+        <Box alignSelf="center" gap="large">
+          <Link to={`/lesson/${i}`} key={i}>
+            <Heading level={3}> {`--- Lesson ${i} ---`} </Heading>
+          </Link>
+        </Box>
       );
     }
     return lessons;
   };
   return (
     <div>
-      <h1>Lessons</h1>
-      {renderLessons()}
+      <PageContent flex gap="medium">
+        <PageHeader title="Lessons" subtitle="List of all lessons" />
+        {renderLessons()}
+      </PageContent>
     </div>
   );
 }

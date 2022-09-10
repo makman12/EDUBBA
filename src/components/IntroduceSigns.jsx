@@ -1,34 +1,15 @@
 import React from "react";
 import db from "../myscripts/cuneiform.json";
-import Hzl_cuneiform, { HzlCuneiform } from "./HzlCuneiform";
+import { HzlCuneiform } from "./HzlCuneiform";
 import Grid from "@mui/material/Grid";
-import {
-  Grommet,
-  Page,
-  PageContent,
-  Card,
-  Text,
-  TextInput,
-  Button,
-  DataTable,
-  Main,
-} from "grommet";
-
-function renderValue(value) {
-  return (
-    <div>
-      <span>{value.value}</span>
-      <span>{value.ratio * 100}%</span>
-    </div>
-  );
-}
+import { Card, Text, DataTable, Box, Tip } from "grommet";
+import { Link } from "react-router-dom";
 
 function getTwoDecimalPlaces(number) {
   return Math.round(number * 10000) / 100;
 }
 
 function renderSign(hzl) {
-  let signs = db.__collections__.signs;
   let values = db.__collections__.values;
   // values is a obj with key is id of value and value is object find value objects where value.hzl === hzl
   let valuesOfSign = Object.values(values).filter((value) => value.hzl === hzl);
@@ -37,7 +18,6 @@ function renderSign(hzl) {
     return { ...value, ratio: getTwoDecimalPlaces(value.ratio) };
   });
   console.log(valuesOfSign);
-  let renderedValues = valuesOfSign.map((value) => renderValue(value));
   return (
     <Grid item xs={12} md={6} lg={4}>
       <Card
@@ -52,11 +32,22 @@ function renderSign(hzl) {
         justify="start"
         direction="column"
       >
-        <Text margin="small" textAlign="center" size="large" truncate={false}>
-          <HzlCuneiform signs={[hzl]} />
-        </Text>
+        <Box pad="medium">
+          <Link to={`/sign/${hzl}`} className="text-link">
+            <Tip content="Click on sign for further details">
+              <Text
+                margin="small"
+                textAlign="center"
+                size="large"
+                truncate={false}
+              >
+                <HzlCuneiform signs={[hzl]} />
+              </Text>
+            </Tip>
+          </Link>
+        </Box>
+
         <Card
-          background={{ color: "graph-3" }}
           pad="small"
           align="center"
           justify="center"
@@ -64,10 +55,13 @@ function renderSign(hzl) {
           margin="none"
         >
           <DataTable
+            sortable
+            background={["graph-3", { color: "graph-3", opacity: "strong" }]}
+            sort={{ property: "ratio", direction: "desc" }}
             columns={[
               { property: "value", primary: true, header: "Value" },
-              { property: "ratio", header: "Percentage", units: "%" },
               { property: "value_count", header: "Count" },
+              { property: "ratio", header: "pct", units: "%" },
             ]}
             data={valuesOfSign}
             size="medium"
@@ -82,8 +76,14 @@ export default function IntroduceSigns(props) {
   let signs = props.signs;
   let renderedSigns = signs.map((hzl) => renderSign(hzl));
   return (
-    <Grid container spacing={0}>
-      {renderedSigns}
-    </Grid>
+    <Box>
+      <Text textAlign="center" size="medium" truncate={false}>
+        Click on a sign to go to the value page where you can explore the values
+        and their usage.
+      </Text>
+      <Grid container spacing={0}>
+        {renderedSigns}
+      </Grid>
+    </Box>
   );
 }

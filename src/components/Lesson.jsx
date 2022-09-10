@@ -5,19 +5,17 @@ import Quiz from "./Quiz";
 import IntroduceSigns from "./IntroduceSigns";
 import "../App.css";
 import {
-  Grommet,
   Box,
-  AccordionPanel,
   Page,
   PageContent,
   Main,
-  Accordion,
   PageHeader,
   Anchor,
-  Button,
   Nav,
+  Tip,
 } from "grommet";
-import { Book, CircleQuestion } from "grommet-icons";
+import { Book, CircleQuestion, Next, Previous } from "grommet-icons";
+import { Link } from "react-router-dom";
 
 function getSigns(start, end) {
   let signs = db.__collections__.signs;
@@ -35,6 +33,7 @@ function getSigns(start, end) {
 
 let numberOfTotalWords = 0;
 let numberOfLessonWords = 0;
+let wordsSoFar = 0;
 
 function getWords(signs) {
   let words = db.__collections__.words;
@@ -44,9 +43,11 @@ function getWords(signs) {
   let previos_signs = signs.slice(0, signs.length - 5);
   let lesson_words = [];
   // for each word, check if word.hzls is a subset of signs
+  let wordsSoFarList = [];
   for (let word of words_array) {
     let hzls = word.hzls;
     if (hzls.every((val) => signs.includes(val))) {
+      wordsSoFarList.push(word);
       // check if word.hzls is not a subset of previos_signs
       if (!hzls.every((val) => previos_signs.includes(val))) {
         lesson_words.push(word);
@@ -54,11 +55,24 @@ function getWords(signs) {
     }
   }
   numberOfLessonWords = lesson_words.length;
+  wordsSoFar = wordsSoFarList.length;
   return lesson_words;
 }
 
 export default function Lesson() {
   let lesson_id = useParams().id;
+  let actions = [
+    <Link to={"/lesson/" + (+lesson_id - 1)}>
+      <Anchor icon={<Previous />} label="Previous Lessson" />
+    </Link>,
+    <Link to={"/lesson/" + (+lesson_id + 1)}>
+      <Anchor icon={<Next />} label="Next Lessson" />
+    </Link>,
+  ];
+  // if lesson_id is 1 then remove first action
+  if (lesson_id == 1) {
+    actions.shift();
+  }
   let signs = getSigns(0, lesson_id * 5);
   // get last five signs in lesson_signs
   let lesson_signs = signs.slice(-5);
@@ -86,8 +100,11 @@ export default function Lesson() {
             subtitle={
               "There are " +
               numberOfLessonWords +
-              " words that you can read in this lesson. These words are all attested in the corpus of Hittite texts."
+              " words that you can read in this lesson. These words are all attested in the corpus of Hittite texts. After this lesson you will be able to read " +
+              Math.round((wordsSoFar / numberOfTotalWords) * 1000) / 10 +
+              "% of the corpus."
             }
+            actions={actions}
           />
           <Nav
             align="stretch"
@@ -96,7 +113,7 @@ export default function Lesson() {
             justify="start"
             direction="row"
             pad="small"
-            gap="large"
+            gap="medium"
             margin="none"
           >
             <Anchor
@@ -106,6 +123,7 @@ export default function Lesson() {
               size="medium"
               onClick={(e) => handleNav(e, "signs")}
             />
+
             <Anchor
               icon={<CircleQuestion />}
               label="Practice"
