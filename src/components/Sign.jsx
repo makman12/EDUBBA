@@ -168,8 +168,8 @@ export default function Sign() {
               background={{
                 header: "light-2",
                 body: [
-                  { color: "neutral-2", opacity: "medium" },
-                  { color: "neutral-2", opacity: "strong" },
+                  { color: "control", opacity: "medium" },
+                  { color: "control", opacity: "strong" },
                 ],
                 footer: { dark: "light-2", light: "dark-3" },
               }}

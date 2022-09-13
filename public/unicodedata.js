@@ -2204,7 +2204,7 @@ var unicodeData = [
 			"kar",
 			"kir8"
 		],
-		"unicode": "𒋼𒀀27"
+		"unicode": "𒋼𒀀"
 	},
 	{
 		"HZL": 251,
@@ -2424,7 +2424,7 @@ var unicodeData = [
 		"values": [
 			"AMARxKU6"
 		],
-		"unicode": "𐀀632"
+		"unicode": "𐀀62"
 	},
 	{
 		"HZL": 277,
@@ -2473,14 +2473,14 @@ var unicodeData = [
 		"values": [
 			"KISIM5xÚ-MAŠ"
 		],
-		"unicode": "𐀀733"
+		"unicode": "𐀀"
 	},
 	{
 		"HZL": 284,
 		"values": [
 			"ÁBxA"
 		],
-		"unicode": "𐀀834"
+		"unicode": "𐀀"
 	},
 	{
 		"HZL": 285,
@@ -2619,7 +2619,7 @@ var unicodeData = [
 			"NIN9",
 			"SAL-TÚG"
 		],
-		"unicode": "𒊩𒌆35"
+		"unicode": "𒊩𒌆"
 	},
 	{
 		"HZL": 300,
@@ -3011,7 +3011,7 @@ var unicodeData = [
 		"values": [
 			"uz"
 		],
-		"unicode": "𒊻36"
+		"unicode": "𒊻"
 	},
 	{
 		"HZL": 341,

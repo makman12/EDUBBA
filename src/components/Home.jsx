@@ -1,16 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  Page,
-  PageContent,
-  Main,
-  PageHeader,
-  Anchor,
-  Text,
-  Paragraph,
-  Nav,
-  Box,
-} from "grommet";
+import { PageContent, PageHeader, Anchor, Paragraph, Box } from "grommet";
 
 export class Home extends Component {
   render() {
@@ -29,9 +19,9 @@ export class Home extends Component {
         </Paragraph>
         <Paragraph textAlign="left" fill>
           We analyzed the corpus of Hittite texts and created a corpus of
-          complete words. These 60.000 words (17.000 unique words) were then
-          used to understand how signs were used in Hittite cuneiform. Then aset
-          of lessons based on this analysis were created. Each lesson contains 5
+          complete words. These 60.000 lexeme (17.000 unique) were then used to
+          understand how signs were used in Hittite cuneiform. Then aset of
+          lessons based on this analysis were created. Each lesson contains 5
           signs.
         </Paragraph>
         <Paragraph textAlign="left" fill>

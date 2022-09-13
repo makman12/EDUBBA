@@ -14,8 +14,9 @@ import {
   Nav,
   Tip,
 } from "grommet";
-import { Book, CircleQuestion, Next, Previous } from "grommet-icons";
+import { Book, Transaction, Next, Previous, Edit } from "grommet-icons";
 import { Link } from "react-router-dom";
+import ReverseQuiz from "./ReverseQuiz";
 
 function getSigns(start, end) {
   let signs = db.__collections__.signs;
@@ -61,6 +62,7 @@ function getWords(signs) {
 
 export default function Lesson() {
   let lesson_id = useParams().id;
+  // re-render when lesson_id changes
   let actions = [
     <Link to={"/lesson/" + (+lesson_id - 1)}>
       <Anchor icon={<Previous />} label="Previous Lessson" />
@@ -81,7 +83,7 @@ export default function Lesson() {
   words.sort(() => Math.random() - 0.5);
 
   function handleNav(e, tab) {
-    let tabs = ["signs", "practice"];
+    let tabs = ["signs", "transliterate", "write"];
     // set display non for all tabs except tab use animation
     for (let t of tabs) {
       if (t !== tab) {
@@ -100,7 +102,7 @@ export default function Lesson() {
             subtitle={
               "There are " +
               numberOfLessonWords +
-              " words that you can read in this lesson. These words are all attested in the corpus of Hittite texts. After this lesson you will be able to read " +
+              " lexemes that you can read in this lesson. These lexemes are all attested in the corpus of Hittite texts. After this lesson you will be able to read " +
               Math.round((wordsSoFar / numberOfTotalWords) * 1000) / 10 +
               "% of the corpus."
             }
@@ -109,7 +111,7 @@ export default function Lesson() {
           <Nav
             align="stretch"
             flex={false}
-            background={{ color: "graph-2" }}
+            background={{ color: "focus" }}
             justify="start"
             direction="row"
             pad="small"
@@ -119,36 +121,31 @@ export default function Lesson() {
             <Anchor
               icon={<Book />}
               label="Learn"
-              color="light-1"
               size="medium"
               onClick={(e) => handleNav(e, "signs")}
             />
 
             <Anchor
-              icon={<CircleQuestion />}
-              label="Practice"
-              color="light-1"
+              icon={<Transaction />}
+              label="Transliterate"
               size="medium"
-              onClick={(e) => handleNav(e, "practice")}
+              onClick={(e) => handleNav(e, "transliterate")}
+            />
+            <Anchor
+              icon={<Edit />}
+              label="Transliteration to Cuneiform"
+              size="medium"
+              onClick={(e) => handleNav(e, "write")}
             />
           </Nav>
-          <Box
-            pad="medium"
-            background="light-2"
-            id="signs"
-            className="activeTab"
-          >
+          <Box pad="medium" id="signs" className="activeTab">
             <IntroduceSigns signs={lesson_signs} />
           </Box>
           {/* set display none for box#practice*/}
-          <Box
-            pad="medium"
-            background="light-2"
-            id="practice"
-            className="passiveTab"
-          >
+          <Box pad="medium" id="transliterate" className="passiveTab">
             <Quiz words={words} />
           </Box>
+          <Box pad="medium" id="write" className="passiveTab"></Box>
         </PageContent>
       </Page>
     </Main>

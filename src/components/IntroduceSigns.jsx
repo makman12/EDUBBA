@@ -2,7 +2,7 @@ import React from "react";
 import db from "../myscripts/cuneiform.json";
 import { HzlCuneiform } from "./HzlCuneiform";
 import Grid from "@mui/material/Grid";
-import { Card, Text, DataTable, Box, Tip } from "grommet";
+import { Card, Text, DataTable, Box, Tip, Carousel } from "grommet";
 import { Link } from "react-router-dom";
 
 function getTwoDecimalPlaces(number) {
@@ -17,9 +17,8 @@ function renderSign(hzl) {
   valuesOfSign = valuesOfSign.map((value) => {
     return { ...value, ratio: getTwoDecimalPlaces(value.ratio) };
   });
-  console.log(valuesOfSign);
   return (
-    <Grid item xs={12} md={6} lg={4}>
+    <Grid item xs={12} md={12} lg={12}>
       <Card
         pad="medium"
         gap="medium"
@@ -56,7 +55,10 @@ function renderSign(hzl) {
         >
           <DataTable
             sortable
-            background={["graph-3", { color: "graph-3", opacity: "strong" }]}
+            background={[
+              { color: "graph-1", opacity: "strong" },
+              { color: "graph-1", opacity: "weak" },
+            ]}
             sort={{ property: "ratio", direction: "desc" }}
             columns={[
               { property: "value", primary: true, header: "Value" },
@@ -82,7 +84,7 @@ export default function IntroduceSigns(props) {
         and their usage.
       </Text>
       <Grid container spacing={0}>
-        {renderedSigns}
+        <Carousel fill>{renderedSigns}</Carousel>
       </Grid>
     </Box>
   );

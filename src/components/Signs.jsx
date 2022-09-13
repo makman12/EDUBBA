@@ -92,7 +92,7 @@ export default function Signs() {
         />
         <Box alignSelf="start" gap="large" fill pad="large" direction="row">
           <TextInput placeholder="Enter HZL number" type="number" id="hzl" />
-          <Button primary={true} label="Go" onClick={goToHZL} />
+          <Button primary label="Go" onClick={goToHZL} />
         </Box>
         <Box alignSelf="start" gap="large" fill pad="large" direction="row">
           <TextInput
@@ -100,7 +100,7 @@ export default function Signs() {
             id="value"
             type="text"
           />
-          <Button primary={true} label="Find" onClick={findValueRender} />
+          <Button primary label="Find" onClick={findValueRender} />
         </Box>
         <Box alignSelf="start" gap="large" fill pad="large" direction="row">
           {find}

@@ -4,26 +4,27 @@ This project aims to create an online tool for learning to read Hittite Cuneifor
 The project consists of different lessons. Each lesson aims to teach 5 cuneiform signs.
 
 The order in which the signs were taught was determined so that the most text could be read in the shortest time.
-This ranking was reached by analyzing the Hittite corpus of 17 thousand words.
+This ranking was reached by analyzing the Hittite corpus of 17 thousand lexemes.
 
 
 ## To Do ##
 
 ### First Step ###
 
-- Home Page
-- About Page
-- Lessons Page
+- Home Page [x]
+- Lessons Page [x]
+- Better answer checker [x]
+- Only phonetics checkbox for quiz [x]
 
 ### Next Step ###
 
-- Better answer checker
-- Dummy words when needed
+- Keep track of learning progress 
+- Sign-up and save progress
+- About Page
 - Transliteration to cuneiform question type
 
 ### Further ###
 
-- Sign-up and save progress
 - Tests for confirming lesson done
 
 ### This is a level which this project would not live to see ###
@@ -35,3 +36,4 @@ This ranking was reached by analyzing the Hittite corpus of 17 thousand words.
 - Picture of tablets, process them.
 
 - Allow people to create Hittite Lessons in jupyter like environment. 
+
