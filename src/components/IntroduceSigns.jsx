@@ -24,7 +24,7 @@ function renderSign(hzl) {
         gap="medium"
         overflow="auto"
         flex
-        margin="small"
+        margin="large"
         background={{ color: "background-front", dark: false }}
         hoverIndicator={false}
         align="stretch"
@@ -47,11 +47,11 @@ function renderSign(hzl) {
         </Box>
 
         <Card
-          pad="small"
           align="center"
           justify="center"
           direction="column"
           margin="none"
+          pad="large"
         >
           <DataTable
             sortable
@@ -66,7 +66,7 @@ function renderSign(hzl) {
               { property: "ratio", header: "pct", units: "%" },
             ]}
             data={valuesOfSign}
-            size="medium"
+            size="large"
           />
         </Card>
       </Card>
@@ -84,7 +84,9 @@ export default function IntroduceSigns(props) {
         and their usage.
       </Text>
       <Grid container spacing={0}>
-        <Carousel fill>{renderedSigns}</Carousel>
+        <Carousel fill gap="small">
+          {renderedSigns}
+        </Carousel>
       </Grid>
     </Box>
   );

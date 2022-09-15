@@ -112,7 +112,7 @@ export default function Quiz(props) {
   function renderCorrectAlert(color, text) {
     let textComponent = text.map((t) => {
       return (
-        <Box>
+        <Box pad="xsmall">
           <Text color="light-1">{t}</Text>
         </Box>
       );
@@ -167,7 +167,7 @@ export default function Quiz(props) {
               <Text size="xsmall">
                 <HzlCuneiform signs={[hzl]} />
               </Text>
-              ' but it is not the value in the word.
+              ' but it is not the value here.
             </Text>
           );
         } else {

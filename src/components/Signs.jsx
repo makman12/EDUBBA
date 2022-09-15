@@ -52,6 +52,19 @@ let finds = [];
 export default function Signs() {
   const [find, setFind] = React.useState("");
 
+  // while #hzl in focus and enter is pressed goToHzl
+  function hzlKeyDown(e) {
+    if (e.key === "Enter") {
+      goToHZL(e);
+    }
+  }
+  // while #value in focus and enter is pressed findValueRender
+  function valueKeyDown(e) {
+    if (e.key === "Enter") {
+      findValueRender(e);
+    }
+  }
+
   function findValueRender(e) {
     console.log("findValueRender");
     e.preventDefault();
@@ -91,7 +104,12 @@ export default function Signs() {
           subtitle="Find signs by HZL or by their values"
         />
         <Box alignSelf="start" gap="large" fill pad="large" direction="row">
-          <TextInput placeholder="Enter HZL number" type="number" id="hzl" />
+          <TextInput
+            placeholder="Enter HZL number"
+            type="number"
+            id="hzl"
+            onKeyDown={hzlKeyDown}
+          />
           <Button primary label="Go" onClick={goToHZL} />
         </Box>
         <Box alignSelf="start" gap="large" fill pad="large" direction="row">
@@ -99,6 +117,7 @@ export default function Signs() {
             placeholder="Enter value of a sign"
             id="value"
             type="text"
+            onKeyDown={valueKeyDown}
           />
           <Button primary label="Find" onClick={findValueRender} />
         </Box>

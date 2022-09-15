@@ -9,7 +9,7 @@ export default function Lessons() {
       lessons.push(
         <Box alignSelf="center" gap="large">
           <Link to={`/lesson/${i}`} key={i}>
-            <Heading level={3}> {`--- Lesson ${i} ---`} </Heading>
+            <Heading level={4}> {`⮞ Lesson ${i}`} </Heading>
           </Link>
         </Box>
       );

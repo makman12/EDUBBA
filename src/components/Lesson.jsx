@@ -131,12 +131,12 @@ export default function Lesson() {
               size="medium"
               onClick={(e) => handleNav(e, "transliterate")}
             />
-            <Anchor
+            {/*  <Anchor
               icon={<Edit />}
               label="Transliteration to Cuneiform"
               size="medium"
               onClick={(e) => handleNav(e, "write")}
-            />
+            /> */}
           </Nav>
           <Box pad="medium" id="signs" className="activeTab">
             <IntroduceSigns signs={lesson_signs} />
