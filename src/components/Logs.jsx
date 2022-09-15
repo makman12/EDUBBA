@@ -7,6 +7,8 @@ const logs = [
     changes: [
       "Whats's new page at /logs",
       "fixed sign introduction stylistic issue",
+      "Added menu nav to mobile view",
+      "small details for better mobile view",
     ],
   },
 ];

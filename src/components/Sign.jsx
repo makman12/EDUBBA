@@ -73,8 +73,6 @@ export default function Sign() {
       // get most frequent wordSyllablePrevious
       statDiv = (
         <Card
-          pad="medium"
-          gap="medium"
           overflow="auto"
           flex
           margin="small"
@@ -85,7 +83,6 @@ export default function Sign() {
           direction="column"
         >
           <Card
-            pad="small"
             align="center"
             justify="center"
             direction="column"
@@ -134,7 +131,7 @@ export default function Sign() {
     return (
       <Grid item xs={12} md={6} lg={4}>
         <Card
-          pad="medium"
+          pad="small"
           gap="medium"
           overflow="auto"
           flex
@@ -145,7 +142,7 @@ export default function Sign() {
           justify="start"
           direction="column"
         >
-          <Box pad="medium">
+          <Box pad="none">
             <Text
               margin="small"
               textAlign="center"
@@ -156,7 +153,7 @@ export default function Sign() {
             </Text>
           </Box>
           <Card
-            pad="small"
+            pad="none"
             align="center"
             justify="center"
             direction="column"
@@ -194,12 +191,12 @@ export default function Sign() {
     <Main>
       <Page>
         <PageContent>
-          <Box pad="large" alignSelf="center">
+          <Box pad="small" alignSelf="center">
             <Heading>{"HZL : " + signId}</Heading>
 
             {renderSign(signId)}
           </Box>
-          <Box pad="large">{stats}</Box>
+          <Box pad="small">{stats}</Box>
         </PageContent>
       </Page>
     </Main>

@@ -24,6 +24,7 @@ import myTheme from "./myTheme";
 
 import Profile from "./components/Profile";
 import React from "react";
+import NavBar from "./components/NavBar";
 
 // cutom theme
 
@@ -37,42 +38,7 @@ function App() {
       <Grommet full theme={myTheme}>
         <Page>
           <BrowserRouter>
-            <Nav
-              align="center"
-              flex={false}
-              background={{ color: "brand" }}
-              justify="between"
-              direction="row"
-              pad="xsmall"
-              gap="small"
-              margin="none"
-            >
-              <Link to="/">
-                <Heading level="3" textAlign="start" color="light-1">
-                  <Text className="unicode" size="xlarge">
-                    𒂍𒁾𒁀-
-                  </Text>
-                  É.DUB.BA
-                </Heading>
-              </Link>
-
-              <Box
-                align="center"
-                justify="between"
-                pad="medium"
-                fill="vertical"
-                direction="row"
-                gap="medium"
-              >
-                <Link to="/signs">
-                  <Anchor label="Signs" color="light-1" gap="medium" />
-                </Link>
-                <Link to="/lessons">
-                  <Anchor label="Lessons" color="light-1" gap="medium" />
-                </Link>
-                <Profile />
-              </Box>
-            </Nav>
+            <NavBar />
             <PageContent overflow="auto">
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -86,7 +52,7 @@ function App() {
 
               {/* footer always on bottom*/}
             </PageContent>
-
+            <Box pad="large"></Box>
             <Footer background="brand" pad="medium" className="footer">
               <Anchor target="_blank" href="https://github.com/makman12">
                 M. Ali Akman

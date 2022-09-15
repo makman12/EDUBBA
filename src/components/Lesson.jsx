@@ -94,60 +94,65 @@ export default function Lesson() {
   }
 
   return (
-    <Main>
-      <Page>
-        <PageContent>
-          <PageHeader
-            title={"Lesson " + lesson_id}
-            subtitle={
-              "There are " +
-              numberOfLessonWords +
-              " lexemes that you can read in this lesson. These lexemes are all attested in the corpus of Hittite texts. After this lesson you will be able to read " +
-              Math.round((wordsSoFar / numberOfTotalWords) * 1000) / 10 +
-              "% of the corpus."
-            }
-            actions={actions}
-          />
-          <Nav
-            align="stretch"
-            flex={false}
-            background={{ color: "focus" }}
-            justify="start"
-            direction="row"
-            pad="small"
-            gap="medium"
-            margin="none"
-          >
-            <Anchor
-              icon={<Book />}
-              label="Learn"
-              size="medium"
-              onClick={(e) => handleNav(e, "signs")}
-            />
+    <>
+      <PageHeader
+        title={"Lesson " + lesson_id}
+        subtitle={
+          "There are " +
+          numberOfLessonWords +
+          " lexemes that you can read in this lesson. These lexemes are all attested in the corpus of Hittite texts. After this lesson you will be able to read " +
+          Math.round((wordsSoFar / numberOfTotalWords) * 1000) / 10 +
+          "% of the corpus."
+        }
+        actions={actions}
+      />
+      <Nav
+        align="stretch"
+        flex={false}
+        background={{ color: "focus" }}
+        justify="start"
+        direction="row"
+        pad="none"
+        gap="medium"
+        margin="none"
+      >
+        <Anchor
+          icon={<Book />}
+          label={
+            <Box onClick={(e) => handleNav(e, "signs")} pad="medium">
+              Signs
+            </Box>
+          }
+          margin="none"
+          size="medium"
+          pad="medium"
+        />
 
-            <Anchor
-              icon={<Transaction />}
-              label="Transliterate"
-              size="medium"
-              onClick={(e) => handleNav(e, "transliterate")}
-            />
-            {/*  <Anchor
+        <Anchor
+          icon={<Transaction />}
+          margin="none"
+          label={
+            <Box onClick={(e) => handleNav(e, "transliterate")} pad="medium">
+              Transliterate
+            </Box>
+          }
+          size="medium"
+        />
+        {/*  <Anchor
               icon={<Edit />}
               label="Transliteration to Cuneiform"
               size="medium"
               onClick={(e) => handleNav(e, "write")}
             /> */}
-          </Nav>
-          <Box pad="medium" id="signs" className="activeTab">
-            <IntroduceSigns signs={lesson_signs} />
-          </Box>
-          {/* set display none for box#practice*/}
-          <Box pad="medium" id="transliterate" className="passiveTab">
-            <Quiz words={words} />
-          </Box>
-          <Box pad="medium" id="write" className="passiveTab"></Box>
-        </PageContent>
-      </Page>
-    </Main>
+      </Nav>
+      <Box pad="medium" id="signs" className="activeTab">
+        <IntroduceSigns signs={lesson_signs} />
+      </Box>
+      {/* set display none for box#practice*/}
+      <Box pad="medium" id="transliterate" className="passiveTab">
+        <Quiz words={words} />
+      </Box>
+      <Box pad="medium" id="write" className="passiveTab"></Box>
+    </>
   );
 }

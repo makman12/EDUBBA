@@ -224,11 +224,10 @@ export default function Quiz(props) {
     <div>
       <Card
         id="card"
-        pad="large"
         gap="medium"
+        pad="small"
         overflow="auto"
         flex
-        margin="medium"
         background={{ color: "background-front", dark: false }}
         hoverIndicator={true}
         align="stretch"

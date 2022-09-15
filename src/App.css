@@ -9,3 +9,8 @@
   opacity: 1;
   display: block;
 }
+
+.selectedTab {
+  /*  darken color*/
+  background-color: #e6e6e6;
+}
