@@ -1,60 +1,78 @@
 import React from "react";
 import { HzlCuneiform } from "./HzlCuneiform";
 import FindValueRender from "./FindValueRender";
-import { Box, PageHeader, Text, PageContent, Page } from "grommet";
-import { firestore } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-
-function renderHzlConfused(wrongSigns, hzl) {
-  let hzlConfused = wrongSigns[hzl];
-  let hzlConfusedList = Object.keys(hzlConfused);
-  let hzlConfusedRender = [];
-  for (let value of hzlConfusedList) {
-    hzlConfusedRender.push(
-      <>
-        <FindValueRender value={value} /> {wrongSigns[hzl][value]} times.
-      </>
-    );
-  }
-  return (
-    <Box direction="row" gap="large" fill>
-      <Text>You confused this sign </Text>
-      <HzlCuneiform signs={[hzl]} />
-      <Box direction="column" gap="large">
-        with:{hzlConfusedRender}
-      </Box>
-    </Box>
-  );
-}
+import { Box, PageHeader, Text, PageContent, Page, DataTable } from "grommet";
+import { collection, getDoc, doc } from "firebase/firestore";
+import { MainContext, useContext } from "../context";
 
 export default function TroubledSign() {
-  const userCollection = collection(firestore, "userData");
+  const { userData } = useContext(MainContext);
+  const [mistakes, setMistakes] = React.useState([]);
+  const [mightConfuse, setMightConfuse] = React.useState(<></>);
   React.useEffect(() => {
-    // get userData from firebase
-    const getUserData = async () => {
-      const data = await getDocs(userCollection);
-      const userData = data.docs.map((doc) => doc.data());
-      console.log(userData);
-    };
-    getUserData();
-  }, []);
-  // get local storage wrongSigns
-  // wrongSigns is a object with key as hzl and value is a object with key as confusedValue and value as number of times confused
-
-  let wrongSigns = JSON.parse(localStorage.getItem("wrongSigns"));
-  let signs = Object.keys(wrongSigns);
-  // remove undefined key
-  signs = signs.filter((sign) => sign != "undefined");
-  let components = signs.map((hzl) => renderHzlConfused(wrongSigns, hzl));
+    async function getMistakes() {
+      if (!userData) return;
+      let mistakes = userData.mistakes;
+      const mistakeDoc = await getDoc(mistakes);
+      setMistakes(mistakeDoc.data().list);
+      console.log(mistakeDoc.data().list);
+    }
+    getMistakes();
+  }, [userData]);
+  if (!userData) return <></>;
+  // mistakes is an object with keys of hzl and values of objects with keys of values
+  function renderHZL(hzl) {
+    console.log(hzl, "işte burda");
+    return (
+      <Box pad="small">
+        <HzlCuneiform signs={[hzl]} />
+      </Box>
+    );
+  }
+  function rowClick(row) {
+    console.log(row);
+    let render = (
+      <>
+        Here are some signs that might confuse you with <b>{row.value}</b>
+        <FindValueRender value={row.confusedValue} />
+      </>
+    );
+    setMightConfuse(render);
+  }
   return (
-    <Page>
-      <PageContent fill>
-        <PageHeader
-          title="Your Cuneiform Report"
-          subtitle="See how much you've learned and what your mistakes are."
+    <>
+      <Box pad="medium" gap="medium">
+        <DataTable
+          sort={{ property: "count", direction: "desc" }}
+          paginate={{ step: 10 }}
+          data={mistakes}
+          onClickRow={(event) => {
+            rowClick(event.datum);
+          }}
+          columns={[
+            {
+              property: "hzl",
+              header: "Sign",
+              primary: true,
+              render: (hzl) => renderHZL(hzl.hzl),
+            },
+            {
+              property: "value",
+              header: "Value",
+            },
+            {
+              property: "confusedValue",
+              header: "Confused With",
+            },
+
+            {
+              property: "count",
+              header: "Times Mistaken",
+            },
+          ]}
         />
-        {components}
-      </PageContent>
-    </Page>
+      </Box>
+      <Box align="center">{mightConfuse}</Box>
+    </>
   );
 }

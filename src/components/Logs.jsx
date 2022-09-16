@@ -3,6 +3,14 @@ import { Box, PageHeader, Text } from "grommet";
 
 const logs = [
   {
+    date: "16.09.22",
+    changes: [
+      "Scribe Rank page at /scoreboard",
+      "Created a scoring system for users",
+      "Don't forget to learn from your mistakes at /progress",
+    ],
+  },
+  {
     date: "15.09.22",
     changes: [
       "Whats's new page at /logs",
@@ -20,7 +28,7 @@ function componentLog() {
         <Text size="large" weight="bold">
           ✓ {log.date}
         </Text>
-        <Box gap="small" margin={{ left: "large" }}>
+        <Box gap="small" margin={{ left: "large", bottom: "medium" }}>
           {log.changes.map((change, index) => {
             return <Text key={index}>⮞ {change}</Text>;
           })}

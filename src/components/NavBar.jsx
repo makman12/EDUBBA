@@ -43,6 +43,9 @@ export default function NavBar() {
           <Link to="/lessons">
             <Anchor label="Lessons" color="light-1" gap="medium" />
           </Link>
+          <Link to="/scoreboard">
+            <Anchor label="Scribe Ranks" color="light-1" gap="medium" />
+          </Link>
           <Profile />
         </Box>
       </Nav>
@@ -66,7 +69,6 @@ export default function NavBar() {
           dropProps={{ margin: "none", pad: "none", size: "large" }}
           dropBackground={{ color: "brand", opacity: "medium" }}
           items={[
-            { label: <Profile /> },
             {
               label: (
                 <Box size="large" pad="large">
@@ -83,6 +85,14 @@ export default function NavBar() {
               ),
               href: "/lessons",
             },
+            {
+              label: (
+                <Box size="large" pad="large">
+                  Scribe Ranks
+                </Box>
+              ),
+              href: "/classroom",
+            },
           ]}
         />
         <Link to="/">
@@ -92,6 +102,7 @@ export default function NavBar() {
             </Text>
           </Heading>
         </Link>
+        <Profile />
       </Nav>
     );
   }

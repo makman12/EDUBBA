@@ -51,6 +51,7 @@ let finds = [];
 
 export default function Signs() {
   const [find, setFind] = React.useState("");
+  // use context to get user data
 
   // while #hzl in focus and enter is pressed goToHzl
   function hzlKeyDown(e) {

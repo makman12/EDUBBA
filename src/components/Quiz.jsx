@@ -3,6 +3,15 @@ import { HzlCuneiform } from "./HzlCuneiform";
 import { useState } from "react";
 import { Card, Text, TextInput, Button, Box, CheckBox } from "grommet";
 import db from "../myscripts/cuneiform.json";
+import { MainContext, useContext } from "../context";
+import { firestore } from "../firebaseConfig";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 // get props from parent component
 
 function normalize(text) {
@@ -76,9 +85,26 @@ function createDummyWords(words) {
   return dummyWords;
 }
 
+async function updateScore(userId, scoreChange) {
+  if (userId == null) {
+    return;
+  }
+  console.log("update score", userId, scoreChange);
+  const userRef = doc(firestore, "userData", userId);
+  const userDoc = await getDoc(userRef);
+  let score = userDoc.data().score;
+  score += scoreChange;
+  await updateDoc(userRef, {
+    score: score,
+  });
+  console.log("score updated", score);
+}
+
 export default function Quiz(props) {
   const [onlyPhonetic, setOnlyPhonetic] = useState(false);
   const [useDummy, setUseDummy] = useState(false);
+  const { userData, setUserData } = useContext(MainContext);
+  console.log("quiz", userData);
   let words = props.words;
   let dummyWords = createDummyWords(words);
   if (useDummy) {
@@ -112,7 +138,7 @@ export default function Quiz(props) {
   function renderCorrectAlert(color, text) {
     let textComponent = text.map((t) => {
       return (
-        <Box pad="xsmall">
+        <Box pad="xsmall" key={t}>
           <Text color="light-1">{t}</Text>
         </Box>
       );
@@ -171,9 +197,14 @@ export default function Quiz(props) {
             </Text>
           );
         } else {
-          // create localstorage to save wrong signs
-          troubledSign(correctAnswerArray[i], userAnswerArray[i]);
-          // end of localstorage
+          if (userData) {
+            troubledSign(
+              userData,
+              correctAnswerArray[i],
+              words[quizId].syllabic_hzl[i],
+              userAnswerArray[i]
+            );
+          }
 
           stroke++;
           renderCorrectAlert("status-critical", ["Wrong! Try again!"]);
@@ -188,13 +219,19 @@ export default function Quiz(props) {
       setQuizId(quizId + 1);
       stroke = 0;
       renderCorrectAlert("status-ok", ["Correct!"]);
+      document.getElementById("answer").value = "";
+      if (userData != null) {
+        let scoreChange = 1;
+        updateScore(userData.id, scoreChange);
+      }
+
       return true;
     }
   }
 
   function answerHandle(e) {
     let userAnswer = document.getElementById("answer").value;
-    document.getElementById("answer").value = "";
+    document.getElementById("answer").focus();
     // split userAnswer by "-" and "." and "/"
     let userAnswerArray = userAnswer.split(/[-./]/);
     let correctAnswerArray = words[quizId].word.split(/[-./]/);
@@ -210,6 +247,7 @@ export default function Quiz(props) {
       setQuizId(quizId + 1);
       stroke = 0;
       setCorrectAlert(<div></div>);
+      document.getElementById("answer").value = "";
     }
   }
 
@@ -280,23 +318,37 @@ export default function Quiz(props) {
   );
 }
 
-function troubledSign(value, confusedValue) {
+async function troubledSign(userData, value, hzl, confusedValue) {
   // if value or confusedValue is undefined return
+  console.log("troubledSign");
   if (value == undefined || confusedValue == undefined) {
     return false;
   }
-  let wrongSigns = JSON.parse(localStorage.getItem("wrongSigns"));
-  if (wrongSigns == null) {
-    wrongSigns = {};
-  }
-  let hzl = getHzlOfValue(value);
-  if (wrongSigns[hzl] == null) {
-    wrongSigns[hzl] = {};
-    wrongSigns[hzl][confusedValue] = 1;
-  } else {
-    wrongSigns[hzl][confusedValue] += 1;
-  }
 
-  localStorage.setItem("wrongSigns", JSON.stringify(wrongSigns));
+  let mistakes = userData.mistakes;
+  const mistakeDoc = await getDoc(mistakes);
+  let list = mistakeDoc.data().list;
+  if (list == undefined) {
+    list = [];
+  }
+  let entry = {
+    hzl: hzl,
+    value: value,
+    confusedValue: confusedValue,
+    count: 1,
+  };
+  let index = list.findIndex(
+    (element) =>
+      element.hzl == hzl &&
+      element.value == value &&
+      element.confusedValue == confusedValue
+  );
+  if (index == -1) {
+    list.push(entry);
+  } else {
+    list[index].count++;
+  }
+  await updateDoc(mistakes, { list: list });
+  console.log("troubledSign updated");
 }
 // create localstorage cookie
