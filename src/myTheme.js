@@ -12,4 +12,11 @@ myTheme.carousel = {
   },
 };
 
+myTheme.menu = {
+  background: { color: "brand", opacity: "medium" },
+  item: {
+    justify: "center",
+  },
+};
+
 export default myTheme;

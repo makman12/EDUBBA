@@ -20,6 +20,7 @@ import {
 } from "grommet";
 import "./myscripts/unicode.css";
 import { Auth0Provider } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import myTheme from "./myTheme";
 
 import Profile from "./components/Profile";
@@ -29,10 +30,15 @@ import NavBar from "./components/NavBar";
 // cutom theme
 
 function App() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  if (isAuthenticated) {
+    console.log("girildi", user.nickname);
+  }
   return (
     <Auth0Provider
       domain="dev-e1k72f43.us.auth0.com"
       clientId="6lotGClh7WLTxrzAa75T8tlxcbnUl0MU"
+      clientSecret="Zy8z981q1yhqclXsjE9acrH8f1sy1gjy03gCAfYU-JuwEQElff08zJfsiVFotlGa"
       redirectUri={window.location.origin}
     >
       <Grommet full theme={myTheme}>
@@ -46,7 +52,7 @@ function App() {
                 <Route path="/lesson/:id" element={<Lesson />} />
                 <Route path="/Signs" element={<Signs />} />
                 <Route path="/Sign/:id" element={<Sign />} />
-                <Route path="/deneme" element={<TroubledSign />} />
+                <Route path="/progress" element={<TroubledSign />} />
                 <Route path="/logs" element={<Logs />} />
               </Routes>
 
