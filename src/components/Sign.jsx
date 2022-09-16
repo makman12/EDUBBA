@@ -11,11 +11,12 @@ import {
   Text,
   Card,
   DataTable,
+  PageHeader,
 } from "grommet";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
 import { HzlCuneiform } from "./HzlCuneiform";
-import { render } from "@testing-library/react";
+import lessonsObject from "../myscripts/lessons.json";
 
 let signs = db.__collections__.signs;
 
@@ -131,7 +132,7 @@ export default function Sign() {
     return (
       <Grid item xs={12} md={6} lg={4}>
         <Card
-          pad="small"
+          pad={{ horizontal: "small", vertical: "large" }}
           gap="medium"
           overflow="auto"
           flex
@@ -184,21 +185,27 @@ export default function Sign() {
       </Grid>
     );
   }
+  function findLesson(hzl) {
+    // lessonsObject is object with key is lesson number and value is array of hzl
+    for (let key of Object.keys(lessonsObject)) {
+      if (lessonsObject[key].includes(+hzl)) {
+        return key;
+      }
+    }
+  }
 
   // values is an object, which keys are id of of object
   // find values where value.hzl == sign.id
   return (
-    <Main>
-      <Page>
-        <PageContent>
-          <Box pad="small" alignSelf="center">
-            <Heading>{"HZL : " + signId}</Heading>
-
-            {renderSign(signId)}
-          </Box>
-          <Box pad="small">{stats}</Box>
-        </PageContent>
-      </Page>
-    </Main>
+    <>
+      <Box pad="small" alignSelf="center">
+        <PageHeader
+          title={"HZL : " + signId}
+          subtitle={`Lesson ${findLesson(signId)}`}
+        />
+        {renderSign(signId)}
+      </Box>
+      <Box pad="small">{stats}</Box>
+    </>
   );
 }

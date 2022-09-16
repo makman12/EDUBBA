@@ -223,6 +223,7 @@ export default function Quiz(props) {
       if (userData != null) {
         let scoreChange = 1;
         updateScore(userData.id, scoreChange);
+        learnSigns(userData, words[quizId].syllabic_hzl, 1);
       }
 
       return true;
@@ -318,13 +319,29 @@ export default function Quiz(props) {
   );
 }
 
+async function learnSigns(userData, hzls, change) {
+  let signs = userData.signs;
+  // delete repeated hzls
+  hzls = [...new Set(hzls)];
+  const signGetDoc = await getDoc(signs);
+  let signDoc = signGetDoc.data();
+  for (let i = 0; i < hzls.length; i++) {
+    if (hzls[i] in signDoc) {
+      let count = signDoc[hzls[i]];
+      await updateDoc(signs, { [hzls[i]]: count + change });
+    } else {
+      await updateDoc(signs, { [hzls[i]]: change });
+    }
+  }
+}
+
 async function troubledSign(userData, value, hzl, confusedValue) {
   // if value or confusedValue is undefined return
   console.log("troubledSign");
   if (value == undefined || confusedValue == undefined) {
     return false;
   }
-
+  learnSigns(userData, [hzl], -2);
   let mistakes = userData.mistakes;
   const mistakeDoc = await getDoc(mistakes);
   let list = mistakeDoc.data().list;

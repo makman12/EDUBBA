@@ -17,6 +17,7 @@ import {
 import { Book, Transaction, Next, Previous, Edit } from "grommet-icons";
 import { Link } from "react-router-dom";
 import ReverseQuiz from "./ReverseQuiz";
+import lessonsObject from "../myscripts/lessons.json";
 
 function getSigns(start, end) {
   let signs = db.__collections__.signs;
@@ -30,6 +31,18 @@ function getSigns(start, end) {
   indexes = indexes.map((index) => index + 1);
   // merge indexes with "," and return
   return indexes;
+}
+
+function getLessonSigns(lessonId) {
+  return lessonsObject[lessonId];
+}
+
+function getLessonSignsSoFar(lessonId) {
+  let signsSoFar = [];
+  for (let i = 1; i <= lessonId; i++) {
+    signsSoFar = signsSoFar.concat(getLessonSigns(i));
+  }
+  return signsSoFar;
 }
 
 let numberOfTotalWords = 0;
@@ -64,20 +77,20 @@ export default function Lesson() {
   let lesson_id = useParams().id;
   // re-render when lesson_id changes
   let actions = [
-    <Link to={"/lesson/" + (+lesson_id - 1)}>
-      <Anchor icon={<Previous />} label="Previous Lessson" />
-    </Link>,
     <Link to={"/lesson/" + (+lesson_id + 1)}>
       <Anchor icon={<Next />} label="Next Lessson" />
     </Link>,
+    <Link to={"/lesson/" + (+lesson_id - 1)}>
+      <Anchor icon={<Previous />} label="Previous Lessson" />
+    </Link>,
   ];
-  // if lesson_id is 1 then remove first action
+  // if lesson_id is 1 then remove second action
   if (lesson_id == 1) {
-    actions.shift();
+    actions = actions.slice(0, 1);
   }
-  let signs = getSigns(0, lesson_id * 5);
+  let signs = getLessonSignsSoFar(lesson_id);
   // get last five signs in lesson_signs
-  let lesson_signs = signs.slice(-5);
+  let lesson_signs = getLessonSigns(lesson_id);
   let words = getWords(signs);
   // shuffle words
   words.sort(() => Math.random() - 0.5);
@@ -109,7 +122,7 @@ export default function Lesson() {
       <Nav
         align="stretch"
         flex={false}
-        background={{ color: "focus" }}
+        background={{ color: "brand", opacity: "weak" }}
         justify="start"
         direction="row"
         pad="none"

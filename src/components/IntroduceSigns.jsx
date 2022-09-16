@@ -79,10 +79,6 @@ export default function IntroduceSigns(props) {
   let renderedSigns = signs.map((hzl) => renderSign(hzl));
   return (
     <Box>
-      <Text textAlign="center" size="medium" truncate={false}>
-        Click on a sign to go to the value page where you can explore the values
-        and their usage.
-      </Text>
       <Grid container spacing={0}>
         <Carousel fill gap="small">
           {renderedSigns}

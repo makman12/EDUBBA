@@ -1,6 +1,7 @@
 import React from "react";
 import { PageHeader, Tab, Tabs, Box } from "grommet";
 import TroubledSign from "./TroubledSign";
+import SignProgress from "./SignProgress";
 
 export default function Progress() {
   return (
@@ -14,7 +15,7 @@ export default function Progress() {
           <TroubledSign />
         </Tab>
         <Tab title="Sign Progress">
-          <Box pad="medium">Two</Box>
+          <SignProgress />
         </Tab>
       </Tabs>
     </>

@@ -8,6 +8,9 @@ const logs = [
       "Scribe Rank page at /scoreboard",
       "Created a scoring system for users",
       "Don't forget to learn from your mistakes at /progress",
+      "See your sign progress at /progress",
+      "Lessons page updated",
+      "Sign pages updated",
     ],
   },
   {
