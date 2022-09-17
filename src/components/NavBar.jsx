@@ -71,27 +71,30 @@ export default function NavBar() {
           items={[
             {
               label: (
-                <Box size="large" pad="large">
-                  Signs
-                </Box>
+                <Link to="/signs" style={{ textDecoration: "none" }}>
+                  <Box size="large" pad="large">
+                    Signs
+                  </Box>
+                </Link>
               ),
-              href: "/signs",
             },
             {
               label: (
-                <Box size="large" pad="large">
-                  Lessons
-                </Box>
+                <Link to="/lessons" style={{ textDecoration: "none" }}>
+                  <Box size="large" pad="large">
+                    Lessons
+                  </Box>
+                </Link>
               ),
-              href: "/lessons",
             },
             {
               label: (
-                <Box size="large" pad="large">
-                  Scribe Ranks
-                </Box>
+                <Link to="/scoreboard" style={{ textDecoration: "none" }}>
+                  <Box size="large" pad="large">
+                    Scribe Ranks
+                  </Box>
+                </Link>
               ),
-              href: "/classroom",
             },
           ]}
         />

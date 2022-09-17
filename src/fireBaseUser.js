@@ -8,18 +8,32 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+import hittiteNames from "./myscripts/names.json";
 
-let username = localStorage.getItem("nickname");
+let userSub = localStorage.getItem("usersub");
 
-export const getUser = async (nickname = null) => {
-  if (username || nickname) {
+async function randomUsernameGenerator() {
+  let randomName =
+    hittiteNames[Math.floor(Math.random() * hittiteNames.length)];
+  const userData = collection(firestore, "userData");
+  const q = query(userData, where("username", "==", randomName));
+  const querySnapshot = await getDocs(q);
+  if (querySnapshot.empty) {
+    return randomName;
+  } else {
+    randomUsernameGenerator();
+  }
+}
+
+export const getUser = async (newUserSub = null, newUserEmail = null) => {
+  if (userSub || newUserSub) {
     const userData = collection(firestore, "userData");
     // for docs of collection userData get user with username
     let user;
-    if (username) {
-      user = query(userData, where("username", "==", username));
+    if (userSub) {
+      user = query(userData, where("sub", "==", userSub));
     } else {
-      user = query(userData, where("username", "==", nickname));
+      user = query(userData, where("sub", "==", newUserSub));
     }
     // get user data
     const userSnapshot = await getDocs(user);
@@ -31,9 +45,11 @@ export const getUser = async (nickname = null) => {
       const signs = collection(firestore, "signs");
       const newMistakes = await addDoc(mistakes, {});
       const newSigns = await addDoc(signs, {});
-
+      const newUserName = await randomUsernameGenerator();
       const newUser = await addDoc(userData, {
-        username: nickname,
+        sub: newUserSub,
+        email: newUserEmail,
+        username: newUserName,
         score: 0,
         mistakes: newMistakes,
         signs: newSigns,

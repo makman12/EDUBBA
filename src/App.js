@@ -7,6 +7,7 @@ import Signs from "./components/Signs";
 import Sign from "./components/Sign";
 import Classroom from "./components/Classroom";
 import Progress from "./components/Progress";
+import Online from "./components/Online";
 import { Page, PageContent, Anchor, Box, Footer, Grommet } from "grommet";
 import "./myscripts/unicode.css";
 import { Auth0Provider } from "@auth0/auth0-react";
@@ -26,6 +27,8 @@ function App() {
     getUser().then((user) => {
       if (user) {
         setUserData(user);
+      } else {
+        console.log("no user");
       }
     });
   }, []);
@@ -59,6 +62,7 @@ function App() {
                   <Route path="/classroom" element={<Classroom />} />
                   <Route path="/scoreboard" element={<ScoreBoard />} />
                   <Route path="/logo" element={<Logo />} />
+                  <Route path="/online" element={<Online />} />
                   <Route path="*" element={<Home />} />
                 </Routes>
 

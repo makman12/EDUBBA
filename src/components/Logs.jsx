@@ -3,6 +3,12 @@ import { Box, PageHeader, Text } from "grommet";
 
 const logs = [
   {
+    date: "17.09.22",
+    changes: [
+      "Everyone gets a real Hittite name ! At first I thought users might change it later to whatever they want, but I changed my mind. Get use to your Hittite name.",
+    ],
+  },
+  {
     date: "16.09.22",
     changes: [
       "Scribe Rank page at /scoreboard",

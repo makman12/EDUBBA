@@ -4,6 +4,7 @@ import LoginButton from "./LoginButton";
 import { Anchor, Box, Menu } from "grommet";
 import { MainContext, useContext } from "../context";
 import { getUser } from "../fireBaseUser";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -12,13 +13,14 @@ const Profile = () => {
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  if (localStorage.getItem("nickname") === null) {
+  if (localStorage.getItem("usersub") === null) {
     if (isAuthenticated) {
-      // write user.nickname to localStorage
-      localStorage.setItem("nickname", user.nickname);
-      getUser(user.nickname).then((data) => {
+      localStorage.setItem("usersub", user.sub);
+      getUser(user.sub, user.email).then((data) => {
         setUserData(data);
+        localStorage.setItem("username", data.username);
       });
+      let localUsername = localStorage.getItem("username");
       return (
         isAuthenticated && (
           <div>
@@ -27,7 +29,7 @@ const Profile = () => {
                 {
                   label: "Logout",
                   onClick: () => {
-                    localStorage.removeItem("nickname");
+                    localStorage.removeItem("usersub");
                     logout({ returnTo: window.location.origin });
                   },
                 },
@@ -36,7 +38,7 @@ const Profile = () => {
                   href: "/progress",
                 },
               ]}
-              children={<Anchor label={user.nickname} color="light-1" />}
+              children={<Anchor label={localUsername} color="light-1" />}
             />
           </div>
         )
@@ -49,18 +51,19 @@ const Profile = () => {
       );
     }
   } else {
-    let localuser = localStorage.getItem("nickname");
+    let localUsername = localStorage.getItem("username");
     return (
       <div>
         <Menu
           items={[
             {
               label: (
-                <Box pad="medium" size="large">
-                  Progress
-                </Box>
+                <Link to="/progress" style={{ textDecoration: "none" }}>
+                  <Box pad="medium" size="large">
+                    Progress
+                  </Box>
+                </Link>
               ),
-              href: "/progress",
             },
             {
               label: (
@@ -69,12 +72,12 @@ const Profile = () => {
                 </Box>
               ),
               onClick: () => {
-                localStorage.removeItem("nickname");
+                localStorage.removeItem("usersub");
                 logout({ returnTo: window.location.origin });
               },
             },
           ]}
-          children={<Anchor label={localuser} color="light-1" />}
+          children={<Anchor label={localUsername} color="light-1" />}
         />
       </div>
     );

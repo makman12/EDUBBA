@@ -8,14 +8,14 @@ This ranking was reached by analyzing the Hittite corpus of 17 thousand lexemes.
 
 ## To Do
 
-### First Step
+### First Steps
 
 - Home Page [x]
 - Lessons Page [x]
 - Better answer checker [x]
 - Only phonetics checkbox for quiz [x]
 
-### Next Step
+### Next Steps
 
 - Keep track of learning progress [x]
 - Sign-up and save progress [x]
