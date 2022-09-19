@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { PageContent, PageHeader, Anchor, Paragraph, Box } from "grommet";
+import { PageContent, PageHeader, Text, Paragraph, Box } from "grommet";
 
 export class Home extends Component {
   render() {
@@ -39,7 +39,9 @@ export class Home extends Component {
         </Paragraph>
         <Box alignSelf="center">
           <Link to="/lesson/1">
-            <Anchor label="Go to Lesson 1!" />
+            <Text size="large" color="brand">
+              Start Learning!
+            </Text>
           </Link>
         </Box>
       </PageContent>

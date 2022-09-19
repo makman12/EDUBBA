@@ -15,7 +15,7 @@ import {
 } from "grommet";
 import Grid from "@mui/material/Grid";
 import { Link } from "react-router-dom";
-import { HzlCuneiform } from "./HzlCuneiform";
+import  HzlCuneiform  from "./HzlCuneiform";
 import lessonsObject from "../myscripts/lessons.json";
 
 let signs = db.__collections__.signs;

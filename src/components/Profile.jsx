@@ -1,10 +1,24 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
-import { Anchor, Box, Menu } from "grommet";
+import { Anchor, Box, Menu, Text } from "grommet";
 import { MainContext, useContext } from "../context";
 import { getUser } from "../fireBaseUser";
 import { Link } from "react-router-dom";
+
+function NavAccount({ username }) {
+  return (
+    <Box
+      round
+      pad={{ vertical: "small", horizontal: "medium" }}
+      background={{ color: "dark-1", opacity: "medium" }}
+    >
+      <Text color="white" gap="medium" size="large">
+        {username}
+      </Text>
+    </Box>
+  );
+}
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -38,7 +52,7 @@ const Profile = () => {
                   href: "/progress",
                 },
               ]}
-              children={<Anchor label={localUsername} color="light-1" />}
+              children={<NavAccount username={localUsername} />}
             />
           </div>
         )
@@ -77,7 +91,7 @@ const Profile = () => {
               },
             },
           ]}
-          children={<Anchor label={localUsername} color="light-1" />}
+          children={<NavAccount username={localUsername} />}
         />
       </div>
     );

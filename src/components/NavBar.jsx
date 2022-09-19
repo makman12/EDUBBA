@@ -5,6 +5,7 @@ import { Menu as MenuIcon } from "grommet-icons";
 import "../myscripts/unicode.css";
 import Profile from "./Profile";
 import { useMediaQuery } from "react-responsive";
+import NavLink from "./NavLink";
 
 export default function NavBar() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -21,7 +22,7 @@ export default function NavBar() {
         margin="none"
       >
         <Link to="/">
-          <Heading level="3" textAlign="start" color="light-1">
+          <Heading level="3" textAlign="start" color="light-1" margin="medium">
             <Text className="unicode" size="xlarge">
               𒂍𒁾𒁀-
             </Text>
@@ -32,20 +33,17 @@ export default function NavBar() {
         <Box
           align="center"
           justify="between"
-          pad="medium"
+          pad={{ vertical: "small", horizontal: "large" }}
+          round
           fill="vertical"
           direction="row"
-          gap="medium"
+          gap="small"
+          background={{ color: "dark-1", opacity: "medium" }}
         >
-          <Link to="/signs">
-            <Anchor label="Signs" color="light-1" gap="medium" />
-          </Link>
-          <Link to="/lessons">
-            <Anchor label="Lessons" color="light-1" gap="medium" />
-          </Link>
-          <Link to="/scoreboard">
-            <Anchor label="Scribe Ranks" color="light-1" gap="medium" />
-          </Link>
+          <NavLink label="Signs" to="/signs" />
+          <NavLink label="Lessons" to="/lessons" />
+          <NavLink label="Ranking" to="/scoreboard" />
+          <NavLink label="Battle!" to="/battle" />
           <Profile />
         </Box>
       </Nav>
@@ -92,6 +90,15 @@ export default function NavBar() {
                 <Link to="/scoreboard" style={{ textDecoration: "none" }}>
                   <Box size="large" pad="large">
                     Scribe Ranks
+                  </Box>
+                </Link>
+              ),
+            },
+            {
+              label: (
+                <Link to="/battle" style={{ textDecoration: "none" }}>
+                  <Box size="large" pad="large">
+                    Battle
                   </Box>
                 </Link>
               ),

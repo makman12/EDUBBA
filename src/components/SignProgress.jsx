@@ -29,6 +29,7 @@ export default function SignProgress() {
           count: newSignData[key],
           hzl: key,
           learned: newSignData[key] >= 15,
+          poor: newSignData[key] < -5,
           lesson: +findLesson(+key),
         };
       });
@@ -39,6 +40,12 @@ export default function SignProgress() {
         if (sign.learned) {
           newRowProps[sign.hzl] = {
             background: { color: "status-ok", opacity: "medium" },
+            pad: "small",
+          };
+        }
+        if (sign.poor) {
+          newRowProps[sign.hzl] = {
+            background: { color: "status-critical", opacity: "medium" },
             pad: "small",
           };
         }
@@ -62,6 +69,7 @@ export default function SignProgress() {
           {
             property: "lesson",
             header: "Lesson",
+            size: "xxsmall",
           },
           {
             property: "hzl",

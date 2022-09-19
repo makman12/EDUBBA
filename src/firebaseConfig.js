@@ -7,7 +7,10 @@ import "firebase/compat/analytics";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import {
+  useCollectionData,
+  useDocumentData,
+} from "react-firebase-hooks/firestore";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBCOdsK9ndzEnRMb0bc5NmkaKKnmHJx_tU",
@@ -33,5 +36,6 @@ export {
   analytics,
   useAuthState,
   useCollectionData,
+  useDocumentData,
   firebase,
 };

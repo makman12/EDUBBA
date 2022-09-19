@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "grommet";
 import { Link } from "react-router-dom";
-import { HzlCuneiform } from "./HzlCuneiform";
+import HzlCuneiform from "./HzlCuneiform";
 
 export default function CuneiformLinkBox(props) {
   let hzl = props.hzl;

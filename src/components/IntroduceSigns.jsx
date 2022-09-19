@@ -1,6 +1,6 @@
 import React from "react";
 import db from "../myscripts/cuneiform.json";
-import { HzlCuneiform } from "./HzlCuneiform";
+import HzlCuneiform from "./HzlCuneiform";
 import Grid from "@mui/material/Grid";
 import { Card, Text, DataTable, Box, Tip, Carousel } from "grommet";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ function renderSign(hzl) {
     return { ...value, ratio: getTwoDecimalPlaces(value.ratio) };
   });
   return (
-    <Grid item xs={12} md={12} lg={12}>
+    <Grid item xs={12} md={12} lg={12} key={hzl}>
       <Card
         pad="medium"
         gap="medium"
@@ -55,10 +55,11 @@ function renderSign(hzl) {
         >
           <DataTable
             sortable
-            background={[
-              { color: "graph-1", opacity: "strong" },
-              { color: "graph-1", opacity: "weak" },
-            ]}
+            background={{
+              header: "dark-2",
+              body: ["white", "light-2"],
+              footer: { dark: "light-2", light: "dark-3" },
+            }}
             sort={{ property: "ratio", direction: "desc" }}
             columns={[
               { property: "value", primary: true, header: "Value" },

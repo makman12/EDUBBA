@@ -1,5 +1,5 @@
 import React from "react";
-import { HzlCuneiform } from "./HzlCuneiform";
+import HzlCuneiform from "./HzlCuneiform";
 import { useState } from "react";
 import { Card, Text, TextInput, Button, Box, CheckBox } from "grommet";
 import db from "../myscripts/cuneiform.json";

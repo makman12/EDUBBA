@@ -2,19 +2,48 @@ import React, { Component } from "react";
 // import json data from '../myscripts/unicodedata.json' and store it in a variable
 import unicodeData from "../myscripts/unicode.json";
 import "../myscripts/unicode.css";
+import { useMediaQuery } from "react-responsive";
 
-export class HzlCuneiform extends Component {
-  write_cuneiform() {
+export default function HzlCuneiform(props) {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  function write_cuneiform() {
     let cuneiform = "";
-    for (let i of this.props.signs) {
+    for (let i of props.signs) {
       cuneiform += unicodeData[+i - 1]["unicode"];
     }
     return cuneiform;
   }
-
-  render() {
-    return <span className="unicode">{this.write_cuneiform()}</span>;
+  function calculateFontSize() {
+    let fontSize = 0;
+    if (props.signs.length <= 3) {
+      fontSize = 100;
+    } else if (props.signs.length <= 5) {
+      fontSize = 70;
+    } else if (props.signs.length <= 7) {
+      fontSize = 60;
+    } else if (props.signs.length <= 9) {
+      fontSize = 50;
+    } else if (props.signs.length <= 11) {
+      fontSize = 40;
+    } else {
+      fontSize = 30;
+    }
+    let fontStyle = {};
+    if (isMobile) {
+      fontStyle = { fontSize: fontSize * 0.08 + "vh" };
+    } else {
+      if (props.size) {
+        fontStyle = { fontSize: props.size + "px" };
+      } else {
+        fontStyle = { fontSize: 7 + "vh" };
+      }
+    }
+    return fontStyle;
   }
-}
 
-export default HzlCuneiform;
+  return (
+    <span className="unicode" style={calculateFontSize()}>
+      {write_cuneiform()}
+    </span>
+  );
+}

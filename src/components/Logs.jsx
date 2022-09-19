@@ -52,7 +52,7 @@ export default function Logs() {
     <Box>
       <PageHeader
         title="Recent Changes"
-        subtitle="List of new changes that you would like to try."
+        subtitle="List of recent changes that you would like to try."
       />
       {componentLog()}
     </Box>

@@ -8,7 +8,8 @@ import Sign from "./components/Sign";
 import Classroom from "./components/Classroom";
 import Progress from "./components/Progress";
 import Online from "./components/Online";
-import { Page, PageContent, Anchor, Box, Footer, Grommet } from "grommet";
+import Battle from "./components/Battle";
+import { Page, Text, PageContent, Anchor, Box, Footer, Grommet } from "grommet";
 import "./myscripts/unicode.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 import myTheme from "./myTheme";
@@ -63,18 +64,21 @@ function App() {
                   <Route path="/scoreboard" element={<ScoreBoard />} />
                   <Route path="/logo" element={<Logo />} />
                   <Route path="/online" element={<Online />} />
+                  <Route path="/battle" element={<Battle />} />
                   <Route path="*" element={<Home />} />
                 </Routes>
 
                 {/* footer always on bottom*/}
               </PageContent>
               <Box pad="large"></Box>
-              <Footer background="brand" pad="medium" className="footer">
+              <Footer background="brand" pad="small" className="footer">
                 <Anchor target="_blank" href="https://github.com/makman12">
                   M. Ali Akman
                 </Anchor>
                 <Link to="/logs">
-                  <Anchor label="Whats's new?" color="light-2" />
+                  <Text label="Signs" color="white" gap="medium" size="large">
+                    What's New
+                  </Text>
                 </Link>
               </Footer>
             </BrowserRouter>

@@ -13,6 +13,11 @@ export default function ScoreBoard() {
       const usersRef = collection(firestore, "userData");
       const usersSnapshot = await getDocs(usersRef);
       const usersList = usersSnapshot.docs.map((doc) => doc.data());
+      // sort users by score and add an index
+      usersList.sort((a, b) => b.score - a.score);
+      usersList.forEach((user, index) => {
+        user.index = index + 1;
+      });
       setUsersData(usersList);
     }
     getUsers();
@@ -31,6 +36,11 @@ export default function ScoreBoard() {
           rowProps={{ ...rowProps }}
           columns={[
             {
+              property: "index",
+              header: "Rank",
+              size: "xsmall",
+            },
+            {
               property: "username",
               header: "Scribe",
               primary: true,
@@ -41,6 +51,11 @@ export default function ScoreBoard() {
             },
           ]}
           data={usersData}
+          background={{
+            header: "dark-2",
+            body: ["white", "light-2"],
+            footer: { dark: "light-2", light: "dark-3" },
+          }}
         />
       </Box>
     </>

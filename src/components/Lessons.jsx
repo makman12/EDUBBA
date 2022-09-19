@@ -13,8 +13,10 @@ import HzlCuneiform from "./HzlCuneiform";
 import lessonsObject from "../myscripts/lessons.json";
 import { MainContext, useContext } from "../context";
 import { getDoc } from "firebase/firestore";
+import { useMediaQuery } from "react-responsive";
 
 export default function Lessons() {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const { userData } = useContext(MainContext);
   const [signData, setSignData] = React.useState({});
   React.useEffect(() => {
@@ -45,13 +47,13 @@ export default function Lessons() {
       if (started) {
         if (done) {
           progressComponent = (
-            <Box background="status-ok" pad="small">
+            <Box background="status-ok" pad="small" round>
               <Text>Done</Text>
             </Box>
           );
         } else {
           progressComponent = (
-            <Box background="status-warning" pad="small">
+            <Box background="status-warning" pad="small" round>
               <Text>Started</Text>
             </Box>
           );
@@ -61,10 +63,11 @@ export default function Lessons() {
       lessons.push(
         <Box key={i} alignSelf="center" gap="large" margin="large">
           <Link to={`/lesson/${i}`} key={i}>
-            <Box direction="row">
+            <Box direction="row" justify="center">
               {progressComponent}
               <Text>
-                {`⮞ Lesson ${i}`} <HzlCuneiform signs={lessonsObject[i]} />{" "}
+                {`⮞ Lesson ${i}`}{" "}
+                {!isMobile ? <HzlCuneiform signs={lessonsObject[i]} /> : <></>}{" "}
               </Text>
             </Box>
           </Link>
