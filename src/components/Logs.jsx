@@ -3,6 +3,14 @@ import { Box, PageHeader, Text } from "grommet";
 
 const logs = [
   {
+    date: "19.09.22",
+    changes: [
+      "Navbar Changed",
+      "Battle mode has been added",
+      "I hope battle mode won't be buggy and crash the app :)",
+    ],
+  },
+  {
     date: "17.09.22",
     changes: [
       "Everyone gets a real Hittite name ! At first I thought users might change it later to whatever they want, but I changed my mind. Get use to your Hittite name.",

@@ -237,7 +237,7 @@ function ScoreTable(params) {
   // color the first 3
 
   let rowProps = {
-    1: { background: "#AF9500", pad: "medium" },
+    1: { background: "#fec901", pad: "medium" },
     2: { background: "#D7D7D7", pad: "small" },
     3: { background: "#AD8A56", pad: "small" },
   };
