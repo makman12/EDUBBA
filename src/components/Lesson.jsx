@@ -14,10 +14,11 @@ import {
   Nav,
   Tip,
 } from "grommet";
-import { Book, Transaction, Next, Previous, Edit } from "grommet-icons";
+import { Book, Transaction, Next, Previous, Edit, Layer } from "grommet-icons";
 import { Link } from "react-router-dom";
 import ReverseQuiz from "./ReverseQuiz";
 import lessonsObject from "../myscripts/lessons.json";
+import SignFlashCards from "./SignFlashCards";
 
 function getSigns(start, end) {
   let signs = db.__collections__.signs;
@@ -96,7 +97,7 @@ export default function Lesson() {
   words.sort(() => Math.random() - 0.5);
 
   function handleNav(e, tab) {
-    let tabs = ["signs", "transliterate", "write"];
+    let tabs = ["signs", "flashCards", "transliterate"];
     // set display non for all tabs except tab use animation
     for (let t of tabs) {
       if (t !== tab) {
@@ -124,7 +125,7 @@ export default function Lesson() {
         flex={false}
         background={{ color: "brand", opacity: "weak" }}
         justify="start"
-        direction="row"
+        direction="row-responsive"
         pad="none"
         gap="medium"
         margin="none"
@@ -134,6 +135,17 @@ export default function Lesson() {
           label={
             <Box onClick={(e) => handleNav(e, "signs")} pad="medium">
               Signs
+            </Box>
+          }
+          margin="none"
+          size="medium"
+          pad="medium"
+        />
+        <Anchor
+          icon={<Layer />}
+          label={
+            <Box onClick={(e) => handleNav(e, "flashCards")} pad="medium">
+              Flash Cards
             </Box>
           }
           margin="none"
@@ -160,6 +172,9 @@ export default function Lesson() {
       </Nav>
       <Box pad="medium" id="signs" className="activeTab">
         <IntroduceSigns signs={lesson_signs} />
+      </Box>
+      <Box pad="medium" id="flashCards" className="passiveTab">
+        <SignFlashCards signs={lesson_signs} />
       </Box>
       {/* set display none for box#practice*/}
       <Box pad="medium" id="transliterate" className="passiveTab">

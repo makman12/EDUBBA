@@ -162,12 +162,12 @@ function WatingScreen(props) {
         `${props.roomData.username} waits Sun Goddess of Arinna to march on the battlefield`,
         `${props.roomData.username} needs to attain a festival, just be patient...`,
         `${props.roomData.username} is praying...`,
-        `${props.roomData.username} is moving captial to Tarhuntassa... This will take a while...`,
+        `${props.roomData.username} is moving capital to Tarhuntassa... This will take a while...`,
         `${props.roomData.username} was called to the Wheel, just wait here...`,
         `All land of Kaska became hostile to ${props.roomData.username}... Give it a few minutes...`,
       ].sort(() => Math.random() - 0.5);
       setWaitingText(text[0]);
-    }, 4000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
   let roomData = props.roomData;

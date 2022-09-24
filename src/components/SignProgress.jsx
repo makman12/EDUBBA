@@ -28,7 +28,7 @@ export default function SignProgress() {
         return {
           count: newSignData[key],
           hzl: key,
-          learned: newSignData[key] >= 15,
+          learned: newSignData[key] >= 10,
           poor: newSignData[key] < -5,
           lesson: +findLesson(+key),
         };

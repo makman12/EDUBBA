@@ -36,7 +36,7 @@ export default function Lessons() {
     for (let i = 1; i <= 50; i++) {
       let lessonSigns = lessonsObject[i];
       let done = false;
-      if (lessonSigns.every((sign) => signData[sign] >= 15)) {
+      if (lessonSigns.every((sign) => signData[sign] >= 10)) {
         done = true;
       }
       let started = false;
