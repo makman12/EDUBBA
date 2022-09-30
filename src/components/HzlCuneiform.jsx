@@ -29,13 +29,18 @@ export default function HzlCuneiform(props) {
       fontSize = 30;
     }
     let fontStyle = {};
+
+    if (props.small) {
+      fontSize = fontSize / 2;
+    }
+
     if (isMobile) {
       fontStyle = { fontSize: fontSize * 0.08 + "vh" };
     } else {
       if (props.size) {
         fontStyle = { fontSize: props.size + "px" };
       } else {
-        fontStyle = { fontSize: 7 + "vh" };
+        fontStyle = { fontSize: 6 + "vh" };
       }
     }
     return fontStyle;

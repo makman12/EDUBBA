@@ -13,13 +13,14 @@ import { Page, Text, PageContent, Anchor, Box, Footer, Grommet } from "grommet";
 import "./myscripts/unicode.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 import myTheme from "./myTheme";
-
 import React from "react";
 import NavBar from "./components/NavBar";
 import { getUser } from "./fireBaseUser";
 import { MainContext } from "./context";
 import ScoreBoard from "./components/ScoreBoard";
 import Logo from "./components/Logo";
+import About from "./components/About";
+import Review from "./components/Review";
 // cutom theme
 
 function App() {
@@ -66,20 +67,30 @@ function App() {
                   <Route path="/online" element={<Online />} />
                   <Route path="/battle" element={<Battle />} />
                   <Route path="*" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/review" element={<Review />} />
                 </Routes>
 
                 {/* footer always on bottom*/}
               </PageContent>
               <Box pad="large"></Box>
               <Footer background="brand" pad="small" className="footer">
-                <Anchor target="_blank" href="https://github.com/makman12">
+                <Anchor
+                  target="_blank"
+                  href="https://mali.hittites.org"
+                  color="light-1"
+                >
                   M. Ali Akman
                 </Anchor>
-                <Link to="/logs">
-                  <Text label="Signs" color="white" gap="medium" size="large">
-                    What's New
-                  </Text>
-                </Link>
+                <Box direction="row" gap="small">
+                  <Anchor as={Link} to="/about" label="About" color="light-1" />
+                  <Anchor
+                    as={Link}
+                    to="/logs"
+                    label="What's New"
+                    color="light-1"
+                  />
+                </Box>
               </Footer>
             </BrowserRouter>
           </Page>

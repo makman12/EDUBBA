@@ -14,20 +14,40 @@ import {
 } from "firebase/firestore";
 // get props from parent component
 
+const nom = {
+  À: "A",
+  Á: "A",
+  È: "E",
+  É: "E",
+  Ì: "I",
+  Í: "I",
+  Ù: "U",
+  Ú: "U",
+  à: "a",
+  á: "a",
+  é: "e",
+  ì: "i",
+  í: "i",
+  ù: "u",
+  ú: "u",
+  Š: "S",
+  š: "s",
+  Ḫ: "H",
+  ḫ: "h",
+};
+
 function normalize(text) {
   text = text.toLowerCase().trim();
-  text = text.replace(/í/g, "i");
   text = text.replace(/g/g, "k");
   text = text.replace(/b/g, "p");
-  text = text.replace(/ì/g, "i");
-  text = text.replace(/ú/g, "u");
-  text = text.replace(/á/g, "a");
-  text = text.replace(/é/g, "e");
-  text = text.replace(/š/g, "s");
-  text = text.replace(/ḫ/g, "h");
   text = text.replace(/d/g, "t");
   text = text.replace(/j/g, "y");
   text = text.replace(/ia/g, "ya");
+  // for i in nom:
+  //   text = text.replace(i, nom[i])
+  for (var i in nom) {
+    text = text.replace(i, nom[i]);
+  }
   let l = "()?[]x+’'°§⸢⸣*˹˺";
   for (let c of l) {
     while (text.includes(c)) {
@@ -101,24 +121,18 @@ async function updateScore(userId, scoreChange) {
 }
 
 export default function Quiz(props) {
-  const [onlyPhonetic, setOnlyPhonetic] = useState(false);
-  const [useDummy, setUseDummy] = useState(false);
   const { userData, setUserData } = useContext(MainContext);
+  const [onlyPhonetic, setOnlyPhonetic] = useState(false);
+  const [correctAlert, setCorrectAlert] = useState(<div></div>);
+
   console.log("quiz", userData);
   let words = props.words;
-  let dummyWords = createDummyWords(words);
-  if (useDummy) {
-    console.log("use dummy");
-    words = dummyWords;
-    console.log(words);
-  } else {
-    words = props.words;
-  }
+
   // shuffle words
   //words.sort(() => Math.random() - 0.5);
   let [quizId, setQuizId] = useState(0);
   console.log("quizId", quizId);
-  let [correctAlert, setCorrectAlert] = useState(<div></div>);
+
   function quizMaker(word) {
     // if word is undefined return
     if (word == undefined) {
@@ -136,9 +150,11 @@ export default function Quiz(props) {
   }
   let quiz = quizMaker(words[quizId]);
   function renderCorrectAlert(color, text) {
-    let textComponent = text.map((t) => {
+    console.log("render correct alert", text);
+
+    let textComponent = text.map((t, i) => {
       return (
-        <Box pad="xsmall" key={t}>
+        <Box pad="xsmall" key={i}>
           <Text color="light-1">{t}</Text>
         </Box>
       );
@@ -190,7 +206,7 @@ export default function Quiz(props) {
           warnings.push(
             <Text color="dark-1">
               {userAnswerArray[i]} is a value of '
-              <Text size="xsmall">
+              <Text size="large">
                 <HzlCuneiform signs={[hzl]} />
               </Text>
               ' but it is not the value here.
@@ -225,7 +241,7 @@ export default function Quiz(props) {
         updateScore(userData.id, scoreChange);
         learnSigns(userData, words[quizId].syllabic_hzl, 1);
       }
-
+      warnings = [];
       return true;
     }
   }

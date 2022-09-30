@@ -15,24 +15,45 @@ import { MainContext, useContext } from "../context";
 import { getDoc } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
 
+// add lesson for you if user is logged in and has at least 5 signs that they need to study
+
 export default function Lessons() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const { userData } = useContext(MainContext);
   const [signData, setSignData] = React.useState({});
+  const [review, setReview] = React.useState(false);
   React.useEffect(() => {
     async function getSignData() {
       if (!userData) return;
       let signs = userData.signs;
       const signDoc = await getDoc(signs);
       let newSignData = signDoc.data();
-      console.log(newSignData, "signData");
       setSignData(newSignData);
+      // get signs that are less than 10
+      let signsToStudy = Object.keys(newSignData).filter(
+        (key) => newSignData[key] < 10
+      );
+      // check if signsToStudy is at least 5
+      if (signsToStudy.length >= 5) {
+        setReview(true);
+      }
     }
     getSignData();
   }, [userData]);
 
   const renderLessons = () => {
     let lessons = [];
+    if (review) {
+      lessons.push(
+        <Box key={0} alignSelf="center" gap="large" margin="large">
+          <Link to={`/review`} key={0}>
+            <Box direction="row" justify="center">
+              <Text>{`⮞ Review Signs`} </Text>
+            </Box>
+          </Link>
+        </Box>
+      );
+    }
     for (let i = 1; i <= 50; i++) {
       let lessonSigns = lessonsObject[i];
       let done = false;

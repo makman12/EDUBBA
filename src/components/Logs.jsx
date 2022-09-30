@@ -3,6 +3,17 @@ import { Box, PageHeader, Text } from "grommet";
 
 const logs = [
   {
+    date: "29.09.22",
+    changes: [
+      "About page added at /about",
+      "Review signs added at /review",
+      "Fixed some words that contains funny characters",
+      "Changed lessons for few signs",
+      "Fixed the issue with warnings won't go away",
+      "Style changes in footer",
+    ],
+  },
+  {
     date: "19.09.22",
     changes: [
       "Navbar Changed",
